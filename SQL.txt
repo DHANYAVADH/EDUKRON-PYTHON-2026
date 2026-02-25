@@ -1,0 +1,181 @@
+SQL STRING FUNCTIONS
+
+Write a query to convert all customer names to uppercase.
+SELECT UPPER(Customer_Name) AS Upper_Name
+FROM Orders;
+
+Extract the first 5 characters from Product_Name.
+SELECT SUBSTRING(Product_Name, 1, 5) AS First_5_Characters
+FROM Orders;
+
+
+Find the length of each Customer_Name.
+SELECT Customer_Name,
+LENGTH(Customer_Name) AS Name_Length
+FROM Orders;
+
+Replace the word "Rice" with "Premium Rice" in Product_Name.
+SELECT REPLACE(Product_Name, 'Rice', 'Premium Rice') AS Updated_Product_Name
+FROM Orders;
+
+
+Remove leading and trailing spaces from Customer_Name.
+SELECT TRIM(Customer_Name) AS Clean_Name
+FROM Orders;
+
+
+Concatenate First_Name and Last_Name as Full_Name.
+SELECT CONCAT(First_Name, ' ', Last_Name) AS Full_Name
+FROM Customers;
+
+Find customers whose names start with 'A'.
+SELECT *
+FROM Orders
+WHERE Customer_Name LIKE 'A%';
+
+Extract the domain name from Email_ID.
+SELECT SUBSTRING_INDEX(Email_ID, '@', -1) AS Domain_Name
+FROM Customers;
+
+Find the position of '@' in Email_ID.
+SELECT INSTR(Email_ID, '@') AS At_Position
+FROM Customers;
+
+Reverse the Product_Name.
+SELECT REVERSE(Product_Name) AS Reversed_Product_Name
+FROM Orders;
+
+Convert the first letter of each word in Product_Name to uppercase.
+SELECT CONCAT(
+       UPPER(LEFT(Product_Name,1)),
+       LOWER(SUBSTRING(Product_Name,2))
+       ) AS Proper_Case_Product
+FROM Orders;
+
+Extract the last 3 characters from Order_ID.
+SELECT RIGHT(Order_ID, 3) AS Last_3_Digits
+FROM Orders;
+
+Count how many times letter 'a' appears in Customer_Name.
+SELECT Customer_Name,
+       LENGTH(LOWER(Customer_Name)) 
+       - LENGTH(REPLACE(LOWER(Customer_Name),'a','')) AS A_Count
+FROM Orders;
+
+Mask the last 4 digits of a phone number.
+SELECT CONCAT(LEFT(Phone_Number, LENGTH(Phone_Number)-4), 'XXXX') AS Masked_Number
+FROM Customers;
+
+Split Full_Name into First_Name and Last_Name.
+SELECT 
+SUBSTRING_INDEX(Full_Name, ' ', 1) AS First_Name,
+SUBSTRING_INDEX(Full_Name, ' ', -1) AS Last_Name
+FROM Customers;
+
+Remove all special characters from Product_Code.
+SELECT REGEXP_REPLACE(Product_Code, '[^a-zA-Z0-9]', '') AS Clean_Product_Code
+FROM Products;
+
+Compare two columns ignoring case sensitivity.
+SELECT *
+FROM Table_Name
+WHERE LOWER(Column1) = LOWER(Column2);
+
+Find customers whose name contains 'kumar'.
+SELECT *
+FROM Orders
+WHERE LOWER(Customer_Name) LIKE '%kumar%';
+
+Pad Order_ID with leading zeros to make it 6 digits.
+SELECT LPAD(Order_ID, 6, '0') AS Padded_Order_ID
+FROM Orders;
+
+Extract substring between two characters.
+SELECT 
+SUBSTRING_INDEX(
+SUBSTRING_INDEX(Column_Name, '(', -1),')', 1) AS Extracted_Value
+FROM Table_Name;
+
+
+SQL NUMERICAL FUNCTIONS
+
+
+Round Unit_Price to 2 decimal places.
+SELECT ROUND(Unit_Price, 2) AS Rounded_Price
+FROM Orders;
+
+Find total sales per order.
+SELECT Order_ID,
+ Quantity * Unit_Price AS Total_Sales
+FROM Orders;
+
+Calculate average order value.
+SELECT AVG(Quantity * Unit_Price) AS Avg_Order_Value
+FROM Orders;
+
+Find highest product price.
+SELECT MAX(Unit_Price) AS Highest_Price
+FROM Orders;
+
+Find lowest product price.
+SELECT MIN(Unit_Price) AS Lowest_Price
+FROM Orders;
+
+Calculate percentage discount applied.
+SELECT 
+((Original_Price - Unit_Price) / Original_Price) * 100 AS Discount_Percentage
+FROM Orders;
+
+Find modulus of Quantity divided by 2.
+SELECT Quantity,
+Quantity % 2 AS Mod_Value
+FROM Orders;
+
+Convert negative values to positive.
+SELECT ABS(Unit_Price) AS Positive_Value
+FROM Orders;
+
+Truncate price without rounding.
+SELECT TRUNCATE(Unit_Price, 2) AS Truncated_Price
+FROM Orders;
+
+Find square root of total sales.
+SELECT SQRT(SUM(Quantity * Unit_Price)) AS Square_Root_Total_Sales
+FROM Orders;
+
+Calculate exponential value of a number.
+SELECT EXP(2) AS Exponential_Value;
+
+Calculate power of 2^5.
+SELECT POW(2,5) AS Power_Result;
+
+Find absolute difference between two prices.SELECT ABS(MAX(Unit_Price) - MIN(Unit_Price)) AS Price_Difference
+FROM Orders;
+
+Calculate sales growth percentage.SELECT 
+((Current_Sales - Previous_Sales) / Previous_Sales) * 100 AS Growth_Percentage
+FROM Sales_Table;
+
+Find random number between 1 and 100.
+SELECT FLOOR(1 + (RAND() * 100)) AS Random_Number;
+
+Divide total sales by number of orders.
+SELECT 
+SUM(Quantity * Unit_Price) / COUNT(*) AS Avg_Sales_Per_Order
+FROM Orders;
+
+Find ceiling value of price.
+SELECT CEIL(Unit_Price) AS Ceiling_Value
+FROM Orders;
+
+Find floor value of price.
+SELECT FLOOR(Unit_Price) AS Floor_Value
+FROM Orders;
+
+Convert decimal to integer.
+SELECT CAST(Unit_Price AS SIGNED) AS Integer_Value
+FROM Orders;
+
+Calculate compound interest
+SELECT 
+10000 * POW((1 + 5/100), 2) AS Compound_Interest;
