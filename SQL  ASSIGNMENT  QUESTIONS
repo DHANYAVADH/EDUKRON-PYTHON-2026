@@ -1,0 +1,563 @@
+SQL STRING FUNCTIONS
+
+Write a query to convert all customer names to uppercase.
+SELECT UPPER(Customer_Name) AS Upper_Name
+FROM Orders;
+
+Extract the first 5 characters from Product_Name.
+SELECT SUBSTRING(Product_Name, 1, 5) AS First_5_Characters
+FROM Orders;
+
+
+Find the length of each Customer_Name.
+SELECT Customer_Name,
+LENGTH(Customer_Name) AS Name_Length
+FROM Orders;
+
+Replace the word "Rice" with "Premium Rice" in Product_Name.
+SELECT REPLACE(Product_Name, 'Rice', 'Premium Rice') AS Updated_Product_Name
+FROM Orders;
+
+
+Remove leading and trailing spaces from Customer_Name.
+SELECT TRIM(Customer_Name) AS Clean_Name
+FROM Orders;
+
+
+Concatenate First_Name and Last_Name as Full_Name.
+SELECT CONCAT(First_Name, ' ', Last_Name) AS Full_Name
+FROM Customers;
+
+Find customers whose names start with 'A'.
+SELECT *
+FROM Orders
+WHERE Customer_Name LIKE 'A%';
+
+Extract the domain name from Email_ID.
+SELECT SUBSTRING_INDEX(Email_ID, '@', -1) AS Domain_Name
+FROM Customers;
+
+Find the position of '@' in Email_ID.
+SELECT INSTR(Email_ID, '@') AS At_Position
+FROM Customers;
+
+Reverse the Product_Name.
+SELECT REVERSE(Product_Name) AS Reversed_Product_Name
+FROM Orders;
+
+Convert the first letter of each word in Product_Name to uppercase.
+SELECT CONCAT(
+       UPPER(LEFT(Product_Name,1)),
+       LOWER(SUBSTRING(Product_Name,2))
+       ) AS Proper_Case_Product
+FROM Orders;
+
+Extract the last 3 characters from Order_ID.
+SELECT RIGHT(Order_ID, 3) AS Last_3_Digits
+FROM Orders;
+
+Count how many times letter 'a' appears in Customer_Name.
+SELECT Customer_Name,
+       LENGTH(LOWER(Customer_Name)) 
+       - LENGTH(REPLACE(LOWER(Customer_Name),'a','')) AS A_Count
+FROM Orders;
+
+Mask the last 4 digits of a phone number.
+SELECT CONCAT(LEFT(Phone_Number, LENGTH(Phone_Number)-4), 'XXXX') AS Masked_Number
+FROM Customers;
+
+Split Full_Name into First_Name and Last_Name.
+SELECT 
+SUBSTRING_INDEX(Full_Name, ' ', 1) AS First_Name,
+SUBSTRING_INDEX(Full_Name, ' ', -1) AS Last_Name
+FROM Customers;
+
+Remove all special characters from Product_Code.
+SELECT REGEXP_REPLACE(Product_Code, '[^a-zA-Z0-9]', '') AS Clean_Product_Code
+FROM Products;
+
+Compare two columns ignoring case sensitivity.
+SELECT *
+FROM Table_Name
+WHERE LOWER(Column1) = LOWER(Column2);
+
+Find customers whose name contains 'kumar'.
+SELECT *
+FROM Orders
+WHERE LOWER(Customer_Name) LIKE '%kumar%';
+
+Pad Order_ID with leading zeros to make it 6 digits.
+SELECT LPAD(Order_ID, 6, '0') AS Padded_Order_ID
+FROM Orders;
+
+Extract substring between two characters.
+SELECT 
+SUBSTRING_INDEX(
+SUBSTRING_INDEX(Column_Name, '(', -1),')', 1) AS Extracted_Value
+FROM Table_Name;
+
+
+SQL NUMERICAL FUNCTIONS
+
+
+Round Unit_Price to 2 decimal places.
+SELECT ROUND(Unit_Price, 2) AS Rounded_Price
+FROM Orders;
+
+Find total sales per order.
+SELECT Order_ID,
+ Quantity * Unit_Price AS Total_Sales
+FROM Orders;
+
+Calculate average order value.
+SELECT AVG(Quantity * Unit_Price) AS Avg_Order_Value
+FROM Orders;
+
+Find highest product price.
+SELECT MAX(Unit_Price) AS Highest_Price
+FROM Orders;
+
+Find lowest product price.
+SELECT MIN(Unit_Price) AS Lowest_Price
+FROM Orders;
+
+Calculate percentage discount applied.
+SELECT 
+((Original_Price - Unit_Price) / Original_Price) * 100 AS Discount_Percentage
+FROM Orders;
+
+Find modulus of Quantity divided by 2.
+SELECT Quantity,
+Quantity % 2 AS Mod_Value
+FROM Orders;
+
+Convert negative values to positive.
+SELECT ABS(Unit_Price) AS Positive_Value
+FROM Orders;
+
+Truncate price without rounding.
+SELECT TRUNCATE(Unit_Price, 2) AS Truncated_Price
+FROM Orders;
+
+Find square root of total sales.
+SELECT SQRT(SUM(Quantity * Unit_Price)) AS Square_Root_Total_Sales
+FROM Orders;
+
+Calculate exponential value of a number.
+SELECT EXP(2) AS Exponential_Value;
+
+Calculate power of 2^5.
+SELECT POW(2,5) AS Power_Result;
+
+Find absolute difference between two prices.SELECT ABS(MAX(Unit_Price) - MIN(Unit_Price)) AS Price_Difference
+FROM Orders;
+
+Calculate sales growth percentage.SELECT 
+((Current_Sales - Previous_Sales) / Previous_Sales) * 100 AS Growth_Percentage
+FROM Sales_Table;
+
+Find random number between 1 and 100.
+SELECT FLOOR(1 + (RAND() * 100)) AS Random_Number;
+
+Divide total sales by number of orders.
+SELECT 
+SUM(Quantity * Unit_Price) / COUNT(*) AS Avg_Sales_Per_Order
+FROM Orders;
+
+Find ceiling value of price.
+SELECT CEIL(Unit_Price) AS Ceiling_Value
+FROM Orders;
+
+Find floor value of price.
+SELECT FLOOR(Unit_Price) AS Floor_Value
+FROM Orders;
+
+Convert decimal to integer.
+SELECT CAST(Unit_Price AS SIGNED) AS Integer_Value
+FROM Orders;
+
+Calculate compound interest
+SELECT 
+10000 * POW((1 + 5/100), 2) AS Compound_Interest;
+
+
+DATE FUNCTIONS
+
+Extract year from Order_Date.
+SELECT YEAR(Order_Date) AS Year FROM Orders;
+
+Extract month from Order_Date.
+SELECT MONTH(Order_Date) AS Month FROM Orders;
+
+Extract day from Order_Date.
+SELECT DAY(Order_Date) AS Day FROM Orders;
+
+Find current date.
+SELECT CURDATE();
+
+Find current timestamp.
+SELECT NOW();
+
+Add 7 days to Order_Date.
+SELECT DATE_ADD(Order_Date, INTERVAL 7 DAY) FROM Orders;
+
+Subtract 30 days from Order_Date.
+SELECT DATE_SUB(Order_Date, INTERVAL 30 DAY) FROM Orders;
+
+Find difference between two dates.
+SELECT DATEDIFF('2026-03-10', '2026-03-01');
+
+Find number of months between two dates.
+SELECT TIMESTAMPDIFF(MONTH, '2025-01-01', '2026-01-01');
+
+Find last day of the month.
+SELECT LAST_DAY(Order_Date) FROM Orders;
+
+Get first day of the year.
+SELECT MAKEDATE(YEAR(Order_Date), 1) FROM Orders;
+
+Format date as 'DD-MM-YYYY'.
+SELECT DATE_FORMAT(Order_Date, '%d-%m-%Y') FROM Orders;
+
+Convert string to date.
+SELECT STR_TO_DATE('04-03-2026', '%d-%m-%Y');
+
+Convert date to string.
+SELECT DATE_FORMAT(Order_Date, '%d-%m-%Y') FROM Orders;
+
+Find week number of the year.
+SELECT WEEK(Order_Date) FROM Orders;
+
+Find day name from date.
+SELECT DAYNAME(Order_Date) FROM Orders;
+
+Find quarter of the year.
+SELECT QUARTER(Order_Date) FROM Orders;
+
+Calculate age from DOB.
+SELECT TIMESTAMPDIFF(YEAR, DOB, CURDATE()) AS Age FROM Customers;
+
+Check if date is weekend.
+SELECT 
+CASE 
+    WHEN DAYOFWEEK(Order_Date) IN (1,7) THEN 'Weekend'
+    ELSE 'Weekday'
+END AS Day_Type
+FROM Orders;
+
+Find next Monday after a given date
+SELECT DATE_ADD(Order_Date, 
+       INTERVAL (9 - DAYOFWEEK(Order_Date)) % 7 DAY)
+FROM Orders;
+
+
+MATHEMATICAL FUNCTIONS
+
+Find sine value of an angle.
+SELECT SIN(RADIANS(45));
+
+Find cosine value of an angle.
+SELECT COS(RADIANS(45));
+
+Find tangent value.
+SELECT TAN(RADIANS(45));
+
+Convert degrees to radians.
+SELECT RADIANS(45);
+
+Convert radians to degrees.
+SELECT DEGREES(1);
+
+Find logarithm (base 10) of a number.
+SELECT LOG10(100);
+
+Find natural log of a number.
+SELECT LOG(10);
+
+Find square of a number.
+SELECT POW(5, 2);
+
+Find cube of a number.
+SELECT 5 * 5;
+
+Calculate factorial of a number.
+SELECT 1*2*3*4*5 AS factorial_5;
+
+Find greatest value among three numbers.
+SELECT GREATEST(10, 25, 15);
+
+
+Find least value among three numbers.
+SELECT LEAST(10, 25, 15);
+
+Calculate variance of sales.
+SELECT VARIANCE(sales_amount) FROM Sales;
+
+Calculate standard deviation of sales.
+SELECT STDDEV(sales_amount) FROM Sales;
+
+Find average deviation.
+SELECT AVG(ABS(sales_amount - 
+       (SELECT AVG(sales_amount) FROM Sales)))
+FROM Sales;
+
+Calculate geometric mean.
+SELECT EXP(AVG(LOG(sales_amount))) FROM Sales;
+
+Calculate harmonic mean.
+SELECT COUNT(*) / SUM(1/sales_amount) 
+FROM Sales;
+
+Find sum of squares.
+SELECT SUM(POW(sales_amount, 2)) FROM Sales;
+
+Calculate correlation between two columns.
+SELECT 
+(AVG(sales_amount * profit) - 
+ AVG(sales_amount) * AVG(profit)) /
+ (STDDEV(sales_amount) * STDDEV(profit))
+AS correlation
+FROM Sales;
+
+Calculate regression slope
+SELECT 
+(AVG(sales_amount * profit) - 
+ AVG(sales_amount) * AVG(profit)) 
+/ VARIANCE(sales_amount)
+AS regression_slope
+FROM Sales;
+
+
+NULL VALUE FUNCTIONS
+
+
+Replace NULL price with 0.
+SELECT IFNULL(price, 0) AS price
+FROM Orders;
+
+Replace NULL Customer_Name with 'Unknown'.
+SELECT IFNULL(Customer_Name, 'Unknown') AS Customer_Name
+FROM Orders;
+
+Count NULL values in Product_Name.
+SELECT COUNT(*) 
+FROM Orders
+WHERE Product_Name IS NULL;
+
+Find rows where Order_Date is NULL.
+SELECT *
+FROM Orders
+WHERE Order_Date IS NULL;
+
+Use COALESCE to return first non-null value.
+SELECT COALESCE(Customer_Name, Product_Name, 'Not Available')
+FROM Orders;
+
+Use NVL to replace NULL values.
+SELECT IFNULL(price, 0)
+FROM Orders;
+
+Use IFNULL function.
+SELECT IFNULL(price, 0)
+FROM Orders;
+
+Check if column is NULL.
+SELECT *
+FROM Orders
+WHERE price IS NULL;
+
+Check if column is NOT NULL.
+SELECT *
+FROM Orders
+WHERE price IS NOT NULL;
+
+Use NULLIF between two columns.
+SELECT NULLIF(price, discount)
+FROM Orders;
+
+Replace blank values with NULL.
+SELECT NULLIF(Customer_Name, '') 
+FROM Orders;
+
+Count non-null values.
+SELECT COUNT(price)
+FROM Orders;
+
+Filter records where price is NULL or 0.
+SELECT *
+FROM Orders
+WHERE price IS NULL OR price = 0;
+
+Use CASE to handle NULL values.
+SELECT 
+CASE 
+    WHEN price IS NULL THEN 0
+    ELSE price
+END AS price
+FROM Orders;
+
+Compare NULL values properly.
+WHERE price = NULL
+
+Handle NULL in aggregation.
+SELECT SUM(IFNULL(price, 0))
+FROM Orders;
+
+Find average excluding NULL values.
+SELECT AVG(price)
+FROM Orders;
+
+Find sum ignoring NULL values.
+SELECT SUM(price)
+FROM Orders;
+
+Identify columns containing NULL using metadata.
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Orders'
+AND IS_NULLABLE = 'YES';
+
+Convert NULL to default system date
+SELECT IFNULL(Order_Date, CURDATE())
+FROM Orders;
+
+
+ANALYTICAL FUNCTIONS
+
+
+Assign row numbers to each order.
+SELECT order_id,
+       ROW_NUMBER() OVER (ORDER BY order_date) AS row_num
+FROM Sales;
+
+Rank products by price.
+SELECT product_id, price,
+       RANK() OVER (ORDER BY price DESC) AS price_rank
+FROM Sales;
+
+Dense rank products by sales.
+SELECT product_id, sales_amount,
+       DENSE_RANK() OVER (ORDER BY sales_amount DESC) AS dense_rank
+FROM Sales;
+
+Find running total of sales.
+SELECT order_date, sales_amount,
+       SUM(sales_amount) OVER (ORDER BY order_date) AS running_total
+FROM Sales;
+
+Calculate cumulative sum by month.
+SELECT MONTH(order_date) AS month,
+       SUM(sales_amount) OVER (PARTITION BY MONTH(order_date)
+                               ORDER BY order_date) AS cumulative_sum
+FROM Sales;
+
+Find moving average of last 3 days.
+SELECT order_date, sales_amount,
+       AVG(sales_amount) OVER (
+           ORDER BY order_date
+           ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+       ) AS moving_avg
+FROM Sales;
+
+Calculate lag of previous day sales.
+SELECT order_date, sales_amount,
+       LAG(sales_amount, 1) OVER (ORDER BY order_date) AS prev_day_sales
+FROM Sales;
+
+Calculate lead of next day sales.
+SELECT order_date, sales_amount,
+       LEAD(sales_amount, 1) OVER (ORDER BY order_date) AS next_day_sales
+FROM Sales;
+
+Find difference between current and previous sale.
+SELECT order_date, sales_amount,
+       sales_amount - LAG(sales_amount) 
+       OVER (ORDER BY order_date) AS difference
+FROM Sales;
+
+Partition sales by region.
+SELECT region, sales_amount,
+       SUM(sales_amount) OVER (PARTITION BY region) AS region_total
+FROM Sales;
+
+Find top 3 products per category.
+SELECT *
+FROM (
+    SELECT product_id, category, sales_amount,
+           ROW_NUMBER() OVER (PARTITION BY category 
+                              ORDER BY sales_amount DESC) AS rn
+    FROM Sales
+) t
+WHERE rn <= 3;
+
+
+Find bottom 2 customers by sales.
+SELECT *
+FROM (
+    SELECT customer_id, sales_amount,
+           ROW_NUMBER() OVER (ORDER BY sales_amount ASC) AS rn
+    FROM Sales
+) t
+WHERE rn <= 2;
+
+Calculate percentage of total sales.
+SELECT sales_amount,
+       (sales_amount / SUM(sales_amount) OVER ()) * 100 AS percentage
+FROM Sales;
+
+Calculate NTILE distribution of customers.
+SELECT customer_id,
+       NTILE(4) OVER (ORDER BY sales_amount DESC) AS quartile
+FROM Sales;
+
+Find first order per customer.
+SELECT *
+FROM (
+    SELECT *, 
+           ROW_NUMBER() OVER (PARTITION BY customer_id 
+                              ORDER BY order_date) AS rn
+    FROM Sales
+) t
+WHERE rn = 1;
+
+Find last order per customer.
+SELECT *
+FROM (
+    SELECT *, 
+           ROW_NUMBER() OVER (PARTITION BY customer_id 
+                              ORDER BY order_date DESC) AS rn
+    FROM Sales
+) t
+WHERE rn = 1;
+
+Calculate average salary within department.
+SELECT department, salary,
+       AVG(salary) OVER (PARTITION BY department) AS dept_avg
+FROM Sales;
+
+Compare current row with max value in partition.
+SELECT department, salary,
+       MAX(salary) OVER (PARTITION BY department) AS max_salary,
+       salary - MAX(salary) OVER (PARTITION BY department) AS diff
+FROM Sales;
+
+Identify duplicate records using ROW_NUMBER.
+SELECT *
+FROM (
+    SELECT *, 
+           ROW_NUMBER() OVER (PARTITION BY product_id, order_date 
+                              ORDER BY order_id) AS rn
+    FROM Sales
+) t
+WHERE rn > 1;
+
+Find cumulative distinct Count
+SELECT order_date,
+       COUNT(DISTINCT customer_id) 
+FROM Sales
+GROUP BY order_date;
+
+
+
+
+
